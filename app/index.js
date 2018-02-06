@@ -2,9 +2,12 @@
 // base generator scaffolding
 const Generator = require('yeoman-generator');
 // import SPFx generator - optional and not needed
-const spfxYeoman = require('@microsoft/generator-sharepoint/package.json');
+const spfxYeoman = require('@microsoft/generator-sharepoint/lib/generators/app');
 // import command-exists to check if yarn is installed
 const commandExists = require('command-exists').sync;
+// Add Color Support to Higlight steps in this generator
+const chalk = require('chalk');
+
 // Avoid conflict message
 const fs = require('fs');
 
@@ -14,25 +17,98 @@ module.exports = class extends Generator {
         super(args, opts);
     }
 
+    // Helper Method to highlight logging
+    _custLog(logMessage) {
+        this.log(
+            chalk.bold.black.bgYellow('SPCUSTFX: ') +
+            chalk.black.bgYellow(logMessage)
+        )
+    }
+
+    // Initialisation Generator + SPFx generator
     initializing() {
+
+        this._custLog('Initialize Generator');
+
         // Fetch current package.json
         this.pkg = require('../package.json');
+        this.nested = false;
 
-        this.spfx = this.composeWith(
+        this.composeWith(
             require.resolve(`@microsoft/generator-sharepoint/lib/generators/app`), {
                 'skip-install': true,
-                'framework': 'none'
+                'framework': 'none',
+                'nested': true
             }
         );
     }
 
+    // Prompt for user input for Custom Generator
     prompting() {
+        this._custLog('Prompting');
 
+        const prompts = [{
+            type: 'confirm',
+            name: 'cool',
+            message: 'SPFX Extensions are awesome?'
+        }];
+
+        return this.prompt(prompts).then(answers => {
+            this._custLog('Default SharePoint Generator Prompting');
+        });
     }
 
+    // adds additonal editor support in this case CSS Comb
+    configuring(){
+        this._custLog('Add custom editor support');
+        // Add .csscomb.json
+        this._addEditorSupport();
+    }
+
+    // not used because of the dependencies of the SPFx file
+    // Code was moved to Install
+    writing(){
+        this._custLog('Writing custom configuration');
+    }
+
+    install() {
+        this._custLog('Change configuration before actuall installation can happen');
+        // Apply Custom configuration
+        this._applyCustomConfig();
+        // Adding externals      
+        this._addExternals();
+        
+        // add additional typings
+        this._addTypings();
+        // write Sample Code
+        this._writingSampleCode();
+
+        this._custLog('Install required npm dependencies to exisitin package.json');
+        // Install additional NPM Packages
+        this._installNPMPackages();
+    }
+
+    // Run installer normally time to say goodbye
+    // If yarn is installed yarn will be used
+    end(){
+        this._custLog('Yo everythings done');
+        // *UNCOMMENT TO Performce installation
+        // const hasYarn = commandExists('yarn');
+        // this.installDependencies({
+        //     npm: !hasYarn,
+        //     bower: false,
+        //     yarn: hasYarn,
+        //     skipMessage: this.options['skip-install-message'],
+        //     skipInstall: this.options['skip-install']
+        // });
+        this._custLog('That is all folks');
+    }
+
+    // Backup the default gulp file in case something was changed
     _backupSPFXConfig() {
 
         // backup default gulp file;
+        // Fallback to NodeJS FS Object because otherwise in Yeoman context not possible
         fs.rename(
             this.destinationPath('gulpfile.js'),
             this.destinationPath('gulpfile.spfx.js')
@@ -40,26 +116,18 @@ module.exports = class extends Generator {
 
     }
 
-    _deployCustomConfig() {
-
-
-    }
-
+    // Applies gulp and additonal config to project
     _applyCustomConfig() {
 
         this._backupSPFXConfig();
 
-        console.log(
-            this.fs.exists(this.templatePath('gulpfile.js')),
-            this.fs.exists(this.destinationPath('gulpfile.js'))
-        );
-
-        // copy new templates file
+        // Copy custom gulp file to
         this.fs.copy(
             this.templatePath('gulpfile.js'),
             this.destinationPath('gulpfile.js')
         );
-        // copy static assets
+
+        // Add configuration for static assets.
         this.fs.copy(
             this.templatePath('config/copy-static-assets.json'),
             this.destinationPath('config/copy-static-assets.json')
@@ -67,6 +135,7 @@ module.exports = class extends Generator {
 
     }
 
+    // reference external in config.json automatically
     _addExternals() {
 
         // "handlebars": "./node_modules/handlebars/dist/handlebars.amd.min.js"
@@ -84,14 +153,18 @@ module.exports = class extends Generator {
 
     }
 
+    // Copy additional configuration file for editor support
     _addEditorSupport() {
 
+        // Copy defaul configuration file for CSS Comb
+        // URL: http://csscomb.com
         this.fs.copy(
             this.templatePath('editor/.csscomb.json'),
             this.destinationPath('.csscomb.json')
         );
     }
 
+    // Add type support for Handlebars to tsconfiguration.json
     _addTypings() {
 
         // reading JSON
@@ -110,6 +183,7 @@ module.exports = class extends Generator {
 
     }
 
+    // Copy a blank handlbar template aka Hello World Web Part content
     _writingSampleCode() {
 
         this.fs.copy(
@@ -119,6 +193,7 @@ module.exports = class extends Generator {
 
     }
 
+    // install additional NPM packaged for jQuer, Handlbars, webpack loader ...
     _installNPMPackages() {
 
         // Spawn dev dependencies
@@ -135,33 +210,6 @@ module.exports = class extends Generator {
             '@types/handlebars',
             '--save'
         ]);
-
-    }
-
-    install() {
-
-        // Apply Custom configuration
-        this._applyCustomConfig();
-        // Adding externals      
-        this._addExternals();
-        // add additional typings
-        this._addTypings();
-        // write Sample Code
-        this._addEditorSupport();
-        // write Sample Code
-        this._writingSampleCode();
-        // Install additional NPM Packages
-        this._installNPMPackages();
-
-        // const hasYarn = commandExists('yarn');
-        // this.installDependencies({
-        //     npm: !hasYarn,
-        //     bower: false,
-        //     yarn: hasYarn,
-        //     skipMessage: this.options['skip-install-message'],
-        //     skipInstall: this.options['skip-install']
-        // });
-
 
     }
 
