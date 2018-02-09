@@ -5,7 +5,9 @@
   "author": "",
   "license": "ISC",
   "files": [
-    "app"
+    "app",
+    "myspfx",
+    "spfxextension"
   ],
   "keywords": [
     "yeoman-generator"
