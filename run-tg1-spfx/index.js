@@ -33,27 +33,30 @@ module.exports = class extends Generator {
         // Fetch current package.json
         this.pkg = require('../package.json');
 
-        // this.composeWith(
-        //     require.resolve(`@microsoft/generator-sharepoint/lib/generators/app`), {
-        //         'skip-install': true,
-        //         'framework': 'none'
-        //     }
-        // );
+        // Run then test generator 1
+        this._custLog("Compose with testgen1")
+        this.composeWith(
+            require.resolve(`../testgen1`), {}
+        );
+
+        // Run first the SharePoint Generator
+        this._custLog("Compose with @microsoft/sharepoint");
+        this.composeWith(
+            require.resolve(`@microsoft/generator-sharepoint/lib/generators/app`), {
+                'skip-install': true,
+                'framework': 'none',
+                'nested': true
+            }
+        );
 
     }
 
     prompt(){
         this._custLog('my Prompting:');
 
-        this.composeWith(
-            require.resolve(`../spfxextension2`), {}
-        );
 
     }
     writing(){
-        this.composeWith(
-            require.resolve(`../spfxextension`), {}
-        );
 
     }
 
