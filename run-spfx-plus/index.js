@@ -20,7 +20,7 @@ module.exports = class extends Generator {
     // Helper Method to highlight logging
     _custLog(logMessage) {
         this.log(
-            chalk.bold.black.bgYellow('MySPFX: ') +
+            chalk.bold.black.bgYellow('SPFX+: ') +
             chalk.black.bgYellow(logMessage)
         )
     }
@@ -44,20 +44,42 @@ module.exports = class extends Generator {
             }
         );
 
-        // Run then test generator 1
-        this._custLog("Compose with testgen1")
-        this.composeWith(
-            require.resolve(`../testgen1`), {}
-        );
+    }
+
+    // Prompt for user input for Custom Generator
+    prompting() {
+        this._custLog('Prompting');
+
+        const prompts = [{
+            type: 'confirm',
+            name: 'cool',
+            message: 'SPFX Extensions are awesome?'
+        }];
+
+        return this.prompt(prompts);
 
     }
 
-    prompt(){
-        this._custLog('my Prompting:');
+    // adds additonal editor support in this case CSS Comb
+    configuring(){
+        this._custLog('Configuration');
     }
 
+    // not used because of the dependencies of the SPFx file
+    // Code was moved to Install
     writing(){
-
+        this._custLog('Call writing');
     }
+
+    install() {
+        this._custLog('Call install');
+    }
+
+    // Run installer normally time to say goodbye
+    // If yarn is installed yarn will be used
+    end(){
+        this._custLog('Call End');
+    }
+
 
 }

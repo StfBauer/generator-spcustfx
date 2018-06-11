@@ -20,8 +20,8 @@ module.exports = class extends Generator {
     // Helper Method to highlight logging
     _custLog(logMessage) {
         this.log(
-            chalk.bold.black.bgYellow('MySPFX: ') +
-            chalk.black.bgYellow(logMessage)
+            chalk.bold.white.bgRed('TG1-Plus: ') +
+            chalk.white.bgRed(logMessage)
         )
     }
 
@@ -33,17 +33,6 @@ module.exports = class extends Generator {
         // Fetch current package.json
         this.pkg = require('../package.json');
 
-        
-        // Run first the SharePoint Generator
-        this._custLog("Compose with @microsoft/sharepoint");
-        this.composeWith(
-            require.resolve(`@microsoft/generator-sharepoint/lib/generators/app`), {
-                'skip-install': true,
-                'framework': 'none',
-                'nested': true
-            }
-        );
-
         // Run then test generator 1
         this._custLog("Compose with testgen1")
         this.composeWith(
@@ -52,12 +41,39 @@ module.exports = class extends Generator {
 
     }
 
-    prompt(){
-        this._custLog('my Prompting:');
+    // Prompt for user input for Custom Generator
+    prompting() {
+        this._custLog('Prompting');
+
+        const prompts = [{
+            type: 'confirm',
+            name: 'cool',
+            message: 'SPFX Extensions are awesome?'
+        }];
+
+        return this.prompt(prompts);
+
     }
 
-    writing(){
+    // adds additonal editor support in this case CSS Comb
+    configuring(){
+        this._custLog('Configuration');
+    }
 
+    // not used because of the dependencies of the SPFx file
+    // Code was moved to Install
+    writing(){
+        this._custLog('Call writing');
+    }
+
+    install() {
+        this._custLog('Call install');
+    }
+
+    // Run installer normally time to say goodbye
+    // If yarn is installed yarn will be used
+    end(){
+        this._custLog('Call End');
     }
 
 }

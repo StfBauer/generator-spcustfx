@@ -6,19 +6,20 @@
   "license": "ISC",
   "files": [
     "app",
+    "run-spfx-plus",
     "run-spfx-tg1",
     "run-tg1-spfx",
+    "run-tg1-plus",
     "run-tg1-tg2",
     "run-tg2-tg1"
-    
   ],
   "keywords": [
     "yeoman-generator"
   ],
   "dependencies": {
-    "@microsoft/generator-sharepoint": "^1.4.0",
-    "chalk": "^2.3.0",
-    "command-exists": "^1.2.2",
-    "yeoman-generator": "^2.0.2"
+    "@microsoft/generator-sharepoint": "^1.5.0",
+    "chalk": "^2.4.1",
+    "command-exists": "^1.2.6",
+    "yeoman-generator": "^2.0.5"
   }
 }
