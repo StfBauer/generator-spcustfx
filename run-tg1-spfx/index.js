@@ -57,7 +57,7 @@ module.exports = class extends Generator {
 
     }
     writing(){
-
+        this._custLog('my Writing:');
     }
 
 }
