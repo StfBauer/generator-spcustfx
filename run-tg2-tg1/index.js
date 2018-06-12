@@ -20,7 +20,7 @@ module.exports = class extends Generator {
     // Helper Method to highlight logging
     _custLog(logMessage) {
         this.log(
-            chalk.bold.black.bgYellow('MySPFX: ') +
+            chalk.bold.black.bgYellow('run-tg2-tg1: ') +
             chalk.black.bgYellow(logMessage)
         )
     }
@@ -28,7 +28,7 @@ module.exports = class extends Generator {
     // Initialisation Generator + SPFx generator
     initializing() {
 
-        this._custLog('Initialize Generator');
+        this._custLog('Test run for testgen2 followed by testgen1:');
 
         // Fetch current package.json
         this.pkg = require('../package.json');

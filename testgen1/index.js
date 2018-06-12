@@ -20,7 +20,7 @@ module.exports = class extends Generator {
     // Helper Method to highlight logging
     _custLog(logMessage) {
         this.log(
-            chalk.bold.black.bgYellow('1. SPFX Core: ') +
+            chalk.bold.black.bgYellow('TG1: ') +
             chalk.black.bgYellow(logMessage)
         )
     }

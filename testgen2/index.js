@@ -21,7 +21,7 @@ module.exports = class extends Generator {
     _custLog(logMessage) {
         this.log(
             "    " +
-            chalk.bold.black.bgGreen('2. SPFX Custom: ') +
+            chalk.bold.black.bgGreen('TG2: ') +
             chalk.black.bgGreen(logMessage)
         )
     }
