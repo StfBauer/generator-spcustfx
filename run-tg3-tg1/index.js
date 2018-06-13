@@ -20,7 +20,7 @@ module.exports = class extends Generator {
     // Helper Method to highlight logging
     _custLog(logMessage) {
         this.log(
-            chalk.bold.black.bgYellow('run-tg1-tg2: ') +
+            chalk.bold.black.bgYellow('run-tg3-tg1: ') +
             chalk.black.bgYellow(logMessage)
         )
     }
@@ -33,17 +33,18 @@ module.exports = class extends Generator {
         // Fetch current package.json
         this.pkg = require('../package.json');
 
+        this._custLog('my Prompting:');
+        // Run thrne testgen2 first
+        this._custLog("Compose with testgen3")
+        this.composeWith(
+            require.resolve(`../testgen3`), {}
+        );
+
+
         // Run testgen1 first
         this._custLog("Compose with testgen1")
         this.composeWith(
             require.resolve(`../testgen1`), {}
-        );
-
-        this._custLog('my Prompting:');
-        // Run thrne testgen2 first
-        this._custLog("Compose with testgen2")
-        this.composeWith(
-            require.resolve(`../testgen2`), {}
         );
 
     }
