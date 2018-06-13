@@ -15,11 +15,13 @@ module.exports = class extends Generator {
 
     constructor(args, opts) {
         super(args, opts);
+        // Run first the SharePoint Generator
+        this._custLog("Compose with @microsoft/sharepoint");
     }
 
     // Helper Method to highlight logging
     _custLog(logMessage) {
-        this.log(
+        this._custLog(
             chalk.bold.black.bgYellow('MySPFX: ') +
             chalk.black.bgYellow(logMessage)
         )
@@ -33,9 +35,6 @@ module.exports = class extends Generator {
         // Fetch current package.json
         this.pkg = require('../package.json');
 
-        
-        // Run first the SharePoint Generator
-        this._custLog("Compose with @microsoft/sharepoint");
         this.composeWith(
             require.resolve(`@microsoft/generator-sharepoint/lib/generators/app`), {
                 'skip-install': true,
@@ -44,6 +43,10 @@ module.exports = class extends Generator {
             }
         );
 
+    }
+
+    prompt() {
+        this._custLog('my Prompting:');
         // Run then test generator 1
         this._custLog("Compose with testgen1")
         this.composeWith(
@@ -52,11 +55,7 @@ module.exports = class extends Generator {
 
     }
 
-    prompt(){
-        this._custLog('my Prompting:');
-    }
-
-    writing(){
+    writing() {
         this._custLog('my writing');
     }
 
