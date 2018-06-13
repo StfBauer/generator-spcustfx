@@ -30,11 +30,6 @@ module.exports = class extends Generator {
     // Initialisation Generator + SPFx generator
     initializing() {
 
-        this._custLog('Initialize Generator');
-
-        // Fetch current package.json
-        this.pkg = require('../package.json');
-
         this.composeWith(
             require.resolve(`@microsoft/generator-sharepoint/lib/generators/app`), {
                 'skip-install': true,
@@ -46,9 +41,7 @@ module.exports = class extends Generator {
     }
 
     prompt() {
-        this._custLog('my Prompting:');
-        // Run then test generator 1
-        this._custLog("Compose with testgen1")
+
         this.composeWith(
             require.resolve(`../testgen1`), {}
         );
