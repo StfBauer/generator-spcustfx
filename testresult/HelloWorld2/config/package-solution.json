@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "hello-world-2-client-side-solution",
+    "id": "1ce0b6b5-777f-4ce5-a96d-b32df86b9a38",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true
+  },
+  "paths": {
+    "zippedPackage": "solution/hello-world-2.sppkg"
+  }
+}

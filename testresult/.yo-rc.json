@@ -1,0 +1,12 @@
+{
+  "generator-spcustfx": {},
+  "@microsoft/generator-sharepoint": {
+    "solutionName": "HelloWorld2",
+    "environment": "spo",
+    "componentType": "webpart",
+    "framework": "react",
+    "componentName": "helloworld",
+    "componentDescription": "HelloWorld",
+    "isCreatingSolution": true
+  }
+}

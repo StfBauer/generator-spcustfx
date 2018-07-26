@@ -35,15 +35,6 @@ module.exports = class extends Generator {
     // Prompt for user input for Custom Generator
     prompting() {
         this._custLog('Prompting');
-
-        const prompts = [{
-            type: 'confirm',
-            name: 'cool',
-            message: 'SPFX Extensions are awesome?'
-        }];
-
-        return this.prompt(prompts);
-
     }
 
     // adds additonal editor support in this case CSS Comb
