@@ -17,6 +17,10 @@
   "keywords": [
     "yeoman-generator"
   ],
+  "scripts": {
+    "test-single": "mocha test/knockout.test.js && mocha test/react.test.js",
+    "test-recursive": "mocha"
+  },
   "dependencies": {
     "@microsoft/generator-sharepoint": "1.5.0",
     "chalk": "^2.4.1",
